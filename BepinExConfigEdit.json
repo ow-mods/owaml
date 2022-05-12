@@ -1,0 +1,13 @@
+{
+	"commandHeaders":[
+	{
+		"commandHeader":"[Preloader.Entrypoint]",
+		"commands":[
+		{
+			"command":"Type",
+			"value":"MonoBehaviour"
+		}
+		]
+	}
+	]
+}

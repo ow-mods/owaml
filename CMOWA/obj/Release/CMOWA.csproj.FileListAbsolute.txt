@@ -11,3 +11,4 @@ C:\Users\Pichau\Desktop\programas\CMOWA\CMOWA\CMOWA\obj\Release\CMOWA.exe
 C:\Users\Pichau\Desktop\programas\CMOWA\CMOWA\CMOWA\obj\Release\CMOWA.pdb
 C:\Users\Pichau\Desktop\programas\CMOWA\CMOWA\CMOWA\bin\Release\BepinExConfigEdit.json
 C:\Users\Pichau\Desktop\programas\CMOWA\CMOWA\CMOWA\bin\Release\CMOWA.Config.json
+C:\Users\Pichau\Desktop\programas\CMOWA\CMOWA\CMOWA\bin\Release\CMOWA.Manifest.json
