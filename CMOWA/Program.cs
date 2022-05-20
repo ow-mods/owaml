@@ -7,22 +7,25 @@ namespace CMOWA
 
         static void Main(string[] args) 
         {
+            bool exit = false;
             try
             {
-                Initialization(new ArgumentHelper(args));
+                exit = Initialization(new ArgumentHelper(args));
             }
             catch (Exception ex) 
             {
+                exit = false;
                 ConsoleUtils.WriteByType("CMOWA crashed unexpectedly with the following message: " + ex.Message, MessageType.Fatal);
                 ConsoleUtils.WriteByType("Source: " + ex.Source, MessageType.Fatal);
                 ConsoleUtils.WriteByType("StackTrace:" + ex.StackTrace, MessageType.Fatal);
             }
 
             Console.ResetColor();
-            Console.ReadLine();
+            if (!exit)
+                Console.ReadLine();
         }
 
-        static void Initialization(ArgumentHelper argumentHelper)
+        public static bool Initialization(ArgumentHelper argumentHelper)
         {
             ConsoleUtils.WriteByType($"Starting CMOWA", MessageType.Info);
 
@@ -31,18 +34,19 @@ namespace CMOWA
             if (!initialization.CheckArguments(argumentHelper))
             {
                 ConsoleUtils.WriteByType("CMOWA failed on CheckArguments", MessageType.Fatal);
-                return;
+                return false;
             }
             if (!initialization.CheckBepInExConfig())
             {
                 ConsoleUtils.WriteByType("CMOWA failed on CheckAndBepInExFiles", MessageType.Fatal);
-                return;
+                return false;
             }
             if (!initialization.StartGame())
             {
                 ConsoleUtils.WriteByType("CMOWA failed on StartGame", MessageType.Fatal);
-                return;
+                return false;
             }
+            return true;
         }
     }
 }
