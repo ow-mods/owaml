@@ -9,7 +9,7 @@ namespace CMOWA
         {
             try
             {
-                Initialization();
+                Initialization(new ArgumentHelper(args));
             }
             catch (Exception ex) 
             {
@@ -22,18 +22,18 @@ namespace CMOWA
             Console.ReadLine();
         }
 
-        static void Initialization()
+        static void Initialization(ArgumentHelper argumentHelper)
         {
             ConsoleUtils.WriteByType($"Starting CMOWA", MessageType.Info);
 
             FileVerificationAndInitialization initialization = new FileVerificationAndInitialization();
 
-            if (!initialization.CheckCMOWAConfig())
+            if (!initialization.CheckArguments(argumentHelper))
             {
-                ConsoleUtils.WriteByType("CMOWA failed on CheckCMOWAConfig", MessageType.Fatal);
+                ConsoleUtils.WriteByType("CMOWA failed on CheckArguments", MessageType.Fatal);
                 return;
             }
-            if (!initialization.CheckAndBepInExFiles())
+            if (!initialization.CheckBepInExConfig())
             {
                 ConsoleUtils.WriteByType("CMOWA failed on CheckAndBepInExFiles", MessageType.Fatal);
                 return;
