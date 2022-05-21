@@ -79,6 +79,8 @@ namespace CMOWA
 
         public bool CheckBepInExDoorstopAndWinhttp() 
         {
+            if (gameFolder.Equals(bepInExFolder))
+                return true;
             #region doorstop_ini_file_handling
             bool isDoorstopAlreadyMoved = File.Exists(Path.Combine(gameFolder, doorstop_configFileName));
 
