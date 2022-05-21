@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentHelper.cs" />
-    <Compile Include="CMOWAConfigFile.cs" />
     <Compile Include="ConfigurationFileCheckData.cs" />
     <Compile Include="ConsoleUtil.cs" />
     <Compile Include="FileVerificationAndInitialization.cs" />
@@ -57,9 +56,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="BepinExConfigEdit.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="CMOWA.Config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="CMOWA.Manifest.json">
