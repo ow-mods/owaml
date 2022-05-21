@@ -28,8 +28,14 @@ namespace CMOWA
                 return false;
             }
 
+
             gameFolder = argumentHelper.GetArgument("gamePath");
             bepInExFolder = argumentHelper.GetArgument("bepInExFolder");
+
+            if (!argumentHelper.HasArgument("bepInExFolder"))
+            {
+                bepInExFolder = gameFolder;
+            }
 
             if (!Directory.Exists(gameFolder))
             {
@@ -60,9 +66,9 @@ namespace CMOWA
 
                 string[] bepInExConfigFile = CreateBepInExConfigFile(bepInExConfigDataToCheck);
 
-                Directory.CreateDirectory(Path.Combine(gameFolder, bepInExConfigFileRelativePath));
+                Directory.CreateDirectory(Path.Combine(bepInExFolder, bepInExConfigFileRelativePath));
 
-                File.WriteAllLines(Path.Combine(gameFolder, bepInExConfigFileRelativePath, bepInExConfigFileName), bepInExConfigFile);
+                File.WriteAllLines(Path.Combine(bepInExFolder, bepInExConfigFileRelativePath, bepInExConfigFileName), bepInExConfigFile);
                 ConsoleUtils.WriteByType($"Saved {bepInExConfigFileName}", MessageType.Success);
             }
 
@@ -73,8 +79,6 @@ namespace CMOWA
 
         public bool CheckBepInExDoorstopAndWinhttp() 
         {
-            if (string.IsNullOrEmpty(bepInExFolder))
-                return true;
             #region doorstop_ini_file_handling
             bool isDoorstopAlreadyMoved = File.Exists(Path.Combine(gameFolder, doorstop_configFileName));
 
