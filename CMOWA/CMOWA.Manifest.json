@@ -2,7 +2,7 @@
   "author": "Locochoco",
   "name": "CMOWA",
   "uniqueName": "Locochoco.CMOWA",
-  "version": "1.0.0",
-  "minBepInExVersion": "5.4.19",
-  "maxBepInExVersion": "5.4.17"
+  "version": "1.0.1",
+  "minBepInExVersion": "5.4.17",
+  "maxBepInExVersion": "5.4.19"
 }
