@@ -7,7 +7,6 @@ namespace CMOWA
 {
     public class FileVerificationAndInitialization
     {
-
         const string doorstop_configFileName = "doorstop_config.ini";
         const string winhttpFileName = "winhttp.dll";
         const string bepInExConfigFileName = "BepInEx.cfg";
@@ -20,6 +19,7 @@ namespace CMOWA
         const string bepInExConfigEditFile = "BepinExConfigEdit.json";
 
         private string gameFolder;
+        private string bepInExFolder;
         public bool CheckArguments(ArgumentHelper argumentHelper)
         {
             if (!argumentHelper.HasArgument("gamePath"))
@@ -29,6 +29,7 @@ namespace CMOWA
             }
 
             gameFolder = argumentHelper.GetArgument("gamePath");
+            bepInExFolder = argumentHelper.GetArgument("bepInExFolder");
 
             if (!Directory.Exists(gameFolder))
             {
@@ -70,6 +71,60 @@ namespace CMOWA
             return true;
         }
 
+        public bool CheckBepInExDoorstopAndWinhttp() 
+        {
+            if (string.IsNullOrEmpty(bepInExFolder))
+                return true;
+            #region doorstop_ini_file_handling
+            bool isDoorstopAlreadyMoved = File.Exists(Path.Combine(gameFolder, doorstop_configFileName));
+
+            string doorstopFolderToCheck = (isDoorstopAlreadyMoved ? gameFolder : bepInExFolder);
+            string doorstopFilePath = Path.Combine(doorstopFolderToCheck, doorstop_configFileName);
+
+            if (!File.Exists(doorstopFilePath))
+            {
+                ConsoleUtils.WriteByType($"{doorstop_configFileName} ({doorstopFilePath}) file wasn't found", MessageType.Error);
+                return false;
+            }
+
+            string[] doorstopFile = File.ReadAllLines(doorstopFilePath);
+
+            ConsoleUtils.WriteByType("Checking doorstop_config.ini");
+            bool isThereAnyChangesToDoorstop = CheckDoorstopConfigFile(ref doorstopFile, bepInExFolder);
+
+            if (isThereAnyChangesToDoorstop)
+            {
+                ConsoleUtils.WriteByType(isDoorstopAlreadyMoved ? "Saving doorstop_config.ini" : "Copying doorstop_config.ini", MessageType.Warning);
+                File.WriteAllLines(Path.Combine(gameFolder, doorstop_configFileName), doorstopFile);
+
+                ConsoleUtils.WriteByType(isDoorstopAlreadyMoved ? "doorstop_config.ini was saved" : "doorstop_config.ini was copied", MessageType.Success);
+            }
+
+            #endregion
+
+            #region winhttp_file_handling
+
+            bool iswinhttpAlreadyMoved = File.Exists(Path.Combine(gameFolder, winhttpFileName));
+            if (!iswinhttpAlreadyMoved)
+            {
+                ConsoleUtils.WriteByType("Copying winhttp.dll");
+
+                string winhttpFilePath = Path.Combine(bepInExFolder, winhttpFileName);
+
+                if (!File.Exists(winhttpFilePath))
+                {
+                    ConsoleUtils.WriteByType($"{winhttpFileName} ({winhttpFilePath}) file wasn't found", MessageType.Error);
+                    return false;
+                }
+
+                File.Copy(winhttpFilePath, Path.Combine(gameFolder, winhttpFileName));
+
+                ConsoleUtils.WriteByType("winhttp.dll was copied", MessageType.Success);
+            }
+            return true;
+            #endregion
+        }
+
         public bool StartGame() 
         {
             ConsoleUtils.WriteByType("Starting Game");
@@ -86,7 +141,27 @@ namespace CMOWA
             return true;
         }
 
-        #region bepinex_config_editing
+        private bool CheckDoorstopConfigFile(ref string[] doorstopFile, string bepInExFolder)
+        {
+            bool isThereAnyChanges = false;
+            for (int i = 0; i < doorstopFile.Length; i++)
+            {
+                if (doorstopFile[i].StartsWith(doorstop_configtargetAssemblyCommand))
+                {
+                    string expectedCommand = Path.Combine(bepInExFolder, doorstop_configtargetAssemblyDefaultCommand);
+                    if (!doorstopFile[i].EndsWith(expectedCommand))
+                    {
+                        int equalSignPosition = doorstopFile[i].IndexOf('=');
+                        string removedCommandString = doorstopFile[i].Remove(equalSignPosition + 1);
+                        doorstopFile[i] = removedCommandString + expectedCommand;
+                        ConsoleUtils.WriteByType("Editing doorstop_config.ini", MessageType.Warning);
+                        isThereAnyChanges = true;
+                    }
+                }
+            }
+            return isThereAnyChanges;
+        }
+
         private string[] CreateBepInExConfigFile(ConfigurationFileCheckData data)
         {
             List<string> bepInExConfigFile = new List<string>();
@@ -102,6 +177,5 @@ namespace CMOWA
             }
             return bepInExConfigFile.ToArray();
         }
-        #endregion
     }
 }

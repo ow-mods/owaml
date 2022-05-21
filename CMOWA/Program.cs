@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 namespace CMOWA
 {
     public class Program
@@ -39,6 +38,11 @@ namespace CMOWA
             if (!initialization.CheckBepInExConfig())
             {
                 ConsoleUtils.WriteByType("CMOWA failed on CheckAndBepInExFiles", MessageType.Fatal);
+                return false;
+            }
+            if (!initialization.CheckBepInExDoorstopAndWinhttp())
+            {
+                ConsoleUtils.WriteByType("CMOWA failed on CheckBepInExDoorstopAndWinhttp", MessageType.Fatal);
                 return false;
             }
             if (!initialization.StartGame())
