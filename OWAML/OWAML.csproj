@@ -58,7 +58,7 @@
     <None Include="BepinExConfigEdit.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="CMOWA.Manifest.json">
+    <None Include="OWAML.Manifest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
