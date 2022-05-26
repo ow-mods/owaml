@@ -1,0 +1,8 @@
+{
+  "author": "Locochoco",
+  "name": "OWAML",
+  "uniqueName": "Locochoco.CMOWA",
+  "version": "1.0.1",
+  "minBepInExVersion": "5.4.17",
+  "maxBepInExVersion": "5.4.19"
+}

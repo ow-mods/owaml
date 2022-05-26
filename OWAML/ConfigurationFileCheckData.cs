@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CMOWA
+namespace OWAML
 {
     public class ConfigurationFileCheckData
 	{

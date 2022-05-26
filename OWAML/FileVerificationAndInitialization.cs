@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace CMOWA
+namespace OWAML
 {
     public class FileVerificationAndInitialization
     {

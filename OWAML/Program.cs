@@ -1,5 +1,5 @@
 ﻿using System;
-namespace CMOWA
+namespace OWAML
 {
     public class Program
     {

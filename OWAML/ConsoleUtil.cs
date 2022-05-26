@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CMOWA
+namespace OWAML
 {
     public static class ConsoleUtils
     {

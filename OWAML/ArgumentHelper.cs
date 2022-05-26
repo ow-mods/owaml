@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CMOWA
+namespace OWAML
 {
 	//From https://github.com/amazingalek/owml/blob/master/src/OWML.Launcher/ArgumentHelper.cs
 	public class ArgumentHelper
