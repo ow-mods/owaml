@@ -108,7 +108,7 @@ namespace OWAML
 					_hasReceivedFatalMessage = true;
 				}
 
-				var nameTypePrefix = $"[{data.SenderName}.{data.SenderType}] : ";
+				var nameTypePrefix = $"[{data.SenderName}] : ";
 
 				var messageData = data.Message;
 				messageData = messageData.Replace("\n", $"\n{new string(' ', nameTypePrefix.Length)}");
