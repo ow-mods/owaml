@@ -6,9 +6,10 @@ namespace OWAML
 
         static void Main(string[] args) 
         {
+            bool exit = false;
             try
             {
-                Initialization(new ArgumentHelper(args));
+                exit = Initialization(new ArgumentHelper(args));
             }
             catch (Exception ex) 
             {
@@ -18,7 +19,8 @@ namespace OWAML
             }
 
             Console.ResetColor();
-            Console.ReadLine();
+            if (!exit)
+                Console.ReadLine();
         }
 
         public static bool Initialization(ArgumentHelper argumentHelper)
@@ -47,7 +49,7 @@ namespace OWAML
                 ConsoleUtils.WriteByType("OWAML failed on StartGame", MessageType.Fatal);
                 return false;
             }
-            return true;
+            return argumentHelper.HasArgument("consolePort");
         }
     }
 }
