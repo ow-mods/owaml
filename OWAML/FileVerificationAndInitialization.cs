@@ -21,6 +21,8 @@ namespace OWAML
         private string gameFolder;
         private string bepInExFolder;
         private string consolePort;
+        private SocketListener socketListener;
+
         public bool CheckArguments(ArgumentHelper argumentHelper)
         {
             if (!argumentHelper.HasArgument("gamePath"))
@@ -32,7 +34,13 @@ namespace OWAML
 
             gameFolder = argumentHelper.GetArgument("gamePath");
             bepInExFolder = argumentHelper.GetArgument("bepInExFolder");
-            consolePort = argumentHelper.GetArgument("consolePort");
+            if (argumentHelper.HasArgument("consolePort"))
+                consolePort = argumentHelper.GetArgument("consolePort");
+            else
+            {
+                socketListener = new SocketListener();
+                consolePort = socketListener.Init().ToString();
+            }
 
             if (!argumentHelper.HasArgument("bepInExFolder"))
             {
