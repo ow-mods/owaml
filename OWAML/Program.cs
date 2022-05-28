@@ -6,22 +6,19 @@ namespace OWAML
 
         static void Main(string[] args) 
         {
-            bool exit = false;
             try
             {
-                exit = Initialization(new ArgumentHelper(args));
+                Initialization(new ArgumentHelper(args));
             }
             catch (Exception ex) 
             {
-                exit = false;
                 ConsoleUtils.WriteByType("OWAML crashed unexpectedly with the following message: " + ex.Message, MessageType.Fatal);
                 ConsoleUtils.WriteByType("Source: " + ex.Source, MessageType.Fatal);
                 ConsoleUtils.WriteByType("StackTrace:" + ex.StackTrace, MessageType.Fatal);
             }
 
             Console.ResetColor();
-            if (!exit)
-                Console.ReadLine();
+            Console.ReadLine();
         }
 
         public static bool Initialization(ArgumentHelper argumentHelper)
