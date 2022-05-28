@@ -14,7 +14,7 @@ namespace OWAML
             catch (Exception ex) 
             {
                 exit = false;
-                ConsoleUtils.WriteByType("CMOWA crashed unexpectedly with the following message: " + ex.Message, MessageType.Fatal);
+                ConsoleUtils.WriteByType("OWAML crashed unexpectedly with the following message: " + ex.Message, MessageType.Fatal);
                 ConsoleUtils.WriteByType("Source: " + ex.Source, MessageType.Fatal);
                 ConsoleUtils.WriteByType("StackTrace:" + ex.StackTrace, MessageType.Fatal);
             }
@@ -26,28 +26,28 @@ namespace OWAML
 
         public static bool Initialization(ArgumentHelper argumentHelper)
         {
-            ConsoleUtils.WriteByType($"Starting CMOWA", MessageType.Info);
+            ConsoleUtils.WriteByType($"Starting OWAML", MessageType.Info);
 
             FileVerificationAndInitialization initialization = new FileVerificationAndInitialization();
 
             if (!initialization.CheckArguments(argumentHelper))
             {
-                ConsoleUtils.WriteByType("CMOWA failed on CheckArguments", MessageType.Fatal);
+                ConsoleUtils.WriteByType("OWAML failed on CheckArguments", MessageType.Fatal);
                 return false;
             }
             if (!initialization.CheckBepInExConfig())
             {
-                ConsoleUtils.WriteByType("CMOWA failed on CheckAndBepInExFiles", MessageType.Fatal);
+                ConsoleUtils.WriteByType("OWAML failed on CheckAndBepInExFiles", MessageType.Fatal);
                 return false;
             }
             if (!initialization.CheckBepInExDoorstopAndWinhttp())
             {
-                ConsoleUtils.WriteByType("CMOWA failed on CheckBepInExDoorstopAndWinhttp", MessageType.Fatal);
+                ConsoleUtils.WriteByType("OWAML failed on CheckBepInExDoorstopAndWinhttp", MessageType.Fatal);
                 return false;
             }
             if (!initialization.StartGame())
             {
-                ConsoleUtils.WriteByType("CMOWA failed on StartGame", MessageType.Fatal);
+                ConsoleUtils.WriteByType("OWAML failed on StartGame", MessageType.Fatal);
                 return false;
             }
             return true;
