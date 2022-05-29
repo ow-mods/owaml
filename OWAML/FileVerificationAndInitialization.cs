@@ -20,6 +20,9 @@ namespace OWAML
 
         private string gameFolder;
         private string bepInExFolder;
+        private string consolePort;
+        private SocketListener socketListener;
+
         public bool CheckArguments(ArgumentHelper argumentHelper)
         {
             if (!argumentHelper.HasArgument("gamePath"))
@@ -31,6 +34,13 @@ namespace OWAML
 
             gameFolder = argumentHelper.GetArgument("gamePath");
             bepInExFolder = argumentHelper.GetArgument("bepInExFolder");
+            if (argumentHelper.HasArgument("consolePort"))
+                consolePort = argumentHelper.GetArgument("consolePort");
+            else
+            {
+                socketListener = new SocketListener();
+                consolePort = socketListener.Init().ToString();
+            }
 
             if (!argumentHelper.HasArgument("bepInExFolder"))
             {
@@ -141,7 +151,14 @@ namespace OWAML
                 ConsoleUtils.WriteByType($"Game executable ({gameEXEPath}) wasn't found", MessageType.Error);
                 return false;
             }
-            Process.Start(gameEXEPath);
+            if (string.IsNullOrWhiteSpace(consolePort))
+            {
+                Process.Start(gameEXEPath);
+            }
+            else
+            {
+                Process.Start(gameEXEPath, $"-consolePort {consolePort}");
+            }
             ConsoleUtils.WriteByType("Game was started", MessageType.Success);
 
             return true;
