@@ -50,10 +50,10 @@
     <Compile Include="ConfigurationFileCheckData.cs" />
     <Compile Include="ConsoleUtil.cs" />
     <Compile Include="FileVerificationAndInitialization.cs" />
-    <Compile Include="ModSocketMessage.cs" />
+    <Compile Include="ModConsole\ModSocketMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SocketListener.cs" />
+    <Compile Include="ModConsole\SocketListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -59,17 +59,13 @@ namespace OWAML
 			while (true)
 			{
 				var client = _server.AcceptTcpClient();
-
 				ConsoleUtils.WriteByType("Console connected to socket!", MessageType.Success);
 
 				var stream = client.GetStream();
 
 				int i;
-
 				while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
-				{
 					ProcessMessage(bytes, i);
-				}
 
 				ConsoleUtils.WriteByType("Closing client!", MessageType.Success);
 				client.Close();
@@ -83,9 +79,7 @@ namespace OWAML
 			foreach (var json in jsons)
 			{
 				if (string.IsNullOrWhiteSpace(json))
-				{
 					continue;
-				}
 
 				ModSocketMessage data;
 				try
@@ -100,13 +94,10 @@ namespace OWAML
 				}
 
 				if (data.Type == MessageType.Quit && !_hasReceivedFatalMessage)
-				{
 					Environment.Exit(0);
-				}
+
 				else if (data.Type == MessageType.Fatal)
-				{
 					_hasReceivedFatalMessage = true;
-				}
 
 				var nameTypePrefix = $"[{data.SenderName}] : ";
 
