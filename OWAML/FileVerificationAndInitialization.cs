@@ -11,7 +11,9 @@ namespace OWAML
         const string winhttpFileName = "winhttp.dll";
         const string bepInExConfigFileName = "BepInEx.cfg";
         const string bepInExConfigFileRelativePath = @"BepInEx\config";
-        const string OuterWilds_Alpha_1_2FileName = "OuterWilds_Alpha_1_2.exe";
+        const string OuterWilds_Alpha_1_2_FileName = "OuterWilds_Alpha_1_2.exe";
+        const string OuterWilds_IGF_FileName = "OuterWilds_IGF_Build.exe";
+        const string OuterWilds_AlphaDemo_FileName = "OuterWilds_AlphaDemo_PC.exe";
 
         const string doorstop_configtargetAssemblyCommand = "targetAssembly";
         const string doorstop_configtargetAssemblyDefaultCommand = @"BepInEx\core\BepInEx.Preloader.dll";
@@ -87,7 +89,7 @@ namespace OWAML
             return true;
         }
 
-        public bool CheckBepInExDoorstopAndWinhttp() 
+        public bool CheckBepInExDoorstopAndWinhttp()
         {
             if (gameFolder.Equals(bepInExFolder))
                 return true;
@@ -141,27 +143,49 @@ namespace OWAML
             #endregion
         }
 
-        public bool StartGame() 
+        public bool StartGame()
         {
             ConsoleUtils.WriteByType("Starting Game");
 
-            string gameEXEPath = Path.Combine(gameFolder, OuterWilds_Alpha_1_2FileName);
-            if (!File.Exists(gameEXEPath))
+            if (CheckAllPaths(out string gameEXEPath))
             {
-                ConsoleUtils.WriteByType($"Game executable ({gameEXEPath}) wasn't found", MessageType.Error);
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(consolePort))
-            {
-                Process.Start(gameEXEPath);
+                if (string.IsNullOrWhiteSpace(consolePort))
+                {
+                    Process.Start(gameEXEPath);
+                }
+                else
+                {
+                    Process.Start(gameEXEPath, $"-consolePort {consolePort}");
+                }
+                ConsoleUtils.WriteByType("Game was started", MessageType.Success);
+
+                return true;
             }
             else
-            {
-                Process.Start(gameEXEPath, $"-consolePort {consolePort}");
-            }
-            ConsoleUtils.WriteByType("Game was started", MessageType.Success);
+                return false;
+        }
 
-            return true;
+        private bool CheckAllPaths(out string gameEXEPath)
+        {
+            gameEXEPath = Path.Combine(gameFolder, OuterWilds_Alpha_1_2_FileName);
+            if (File.Exists(gameEXEPath))
+                return true;
+            else
+                ConsoleUtils.WriteByType($"Game executable ({gameEXEPath}) wasn't found! Searching for other alpha versions.", MessageType.Warning);
+
+            gameEXEPath = Path.Combine(gameFolder, OuterWilds_IGF_FileName);
+            if (File.Exists(gameEXEPath))
+                return true;
+            else
+                ConsoleUtils.WriteByType($"Game executable ({gameEXEPath}) wasn't found! Searching for other alpha versions.", MessageType.Warning);
+
+            gameEXEPath = Path.Combine(gameFolder, OuterWilds_AlphaDemo_FileName);
+            if (File.Exists(gameEXEPath))
+                return true;
+            else
+                ConsoleUtils.WriteByType($"Game executable ({gameEXEPath}) wasn't found!", MessageType.Error);
+
+            return false;
         }
 
         private bool CheckDoorstopConfigFile(ref string[] doorstopFile, string bepInExFolder)

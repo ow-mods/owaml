@@ -2,7 +2,7 @@
   "author": "Locochoco",
   "name": "OWAML",
   "uniqueName": "Locochoco.OWAML",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "minBepInExVersion": "5.4.17",
   "maxBepInExVersion": "5.4.19.1"
 }
